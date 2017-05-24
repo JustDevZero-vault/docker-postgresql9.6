@@ -1,11 +1,10 @@
 dbdata:
-  image: andreagrandi/postgresql:9.3
+  image: justdevzero/postgresql
   volumes:
     - /var/lib/postgresql
-  command: true
 
 db:
-  image: andreagrandi/postgresql:9.3
+  image: justdevzero/postgresql
   volumes_from:
     - dbdata
   ports:
