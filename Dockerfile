@@ -3,6 +3,7 @@ MAINTAINER Daniel Ripoll <info@danielripoll.es>
 
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
 # Add PostgreSQL's repository. It contains the most recent stable release
@@ -16,7 +17,8 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
 RUN apt-get update
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-pgdg postgresql-8.4 \
-    postgresql-contrib-8.4 postgresql-server-dev-8.4 libpq-dev libproj-dev libproj0 proj-bin libgeos-dev libgeos-c1 build-essential ccache wget
+    postgresql-contrib-8.4 postgresql-server-dev-8.4 libpq-dev libproj-dev libproj0 proj-bin libgeos-dev libgeos-c1 build-essential ccache \
+    wget net-tools emacs-nox
 
 RUN cd /usr/local/src && wget http://download.osgeo.org/postgis/source/postgis-1.4.2.tar.gz && tar xzvf postgis-1.4.2.tar.gz && cd postgis-1.4.2 && ./configure && make -j$(nproc) && make install
 
