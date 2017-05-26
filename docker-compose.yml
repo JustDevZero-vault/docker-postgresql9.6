@@ -1,11 +1,14 @@
-dbdata:
-  image: justdevzero/postgresql
-  volumes:
-    - /var/lib/postgresql
+version: '2'
 
-db:
-  image: justdevzero/postgresql
-  volumes_from:
-    - dbdata
-  ports:
-    - "5432:5432"
+services:
+  postgres:
+    image: justdevzero/postgresql
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'template1'
+    volumes:
+      - 'postgresql:/var/lib/postgresql'
+    ports:
+      - '5432:5432'
+volumes:
+  postgresql:
