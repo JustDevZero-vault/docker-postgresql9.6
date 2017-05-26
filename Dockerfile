@@ -28,15 +28,9 @@ RUN /etc/init.d/postgresql start \
 USER root
 
 # Adjust PostgreSQL configuration so that remote connections to the
-# database are possible.
-RUN echo "local    all         postgres                          trust" > /etc/postgresql/8.4/main/pg_hba.conf
-RUN echo "host    pguser         pguser        0.0.0.0/0             md5" >> /etc/postgresql/8.4/main/pg_hba.conf
-RUN echo "host    all         all         127.0.0.1/32          trust" >> /etc/postgresql/8.4/main/pg_hba.conf
-RUN echo "host    all         all         ::1/128               trust" >> /etc/postgresql/8.4/main/pg_hba.conf
-RUN echo "host    all         all         172.17.0.1/16         trust" >> /etc/postgresql/8.4/main/pg_hba.conf
-
-# And add ``listen_addresses`` to ``/etc/postgresql/8.4/main/postgresql.conf``
-RUN echo "listen_addresses='*'" >> /etc/postgresql/8.4/main/postgresql.conf
+# database are possible
+RUN wget -q https://raw.githubusercontent.com/JustDevZero/postgresql-docker/master/confs/pg_hba.conf -O /etc/postgresql/8.4/main/pg_hba.conf
+RUN wget -q https://raw.githubusercontent.com/JustDevZero/postgresql-docker/master/confs/postgresql.conf -O /etc/postgresql/8.4/main/postgresql.conf
 
 # Expose the PostgreSQL port
 EXPOSE 5432
