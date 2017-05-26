@@ -13,10 +13,11 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
 # ``software-properties-common`` and PostgreSQL 8.4
 # There are some warnings (in red) that show up during the build. You can hide
 # them by prefixing each apt-get statement with DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y -t jessie-pgdg postgresql-8.4 \
-    postgresql-contrib-8.4 postgresql-server-dev-8.4 libpq-dev libproj-dev libproj0 proj-bin libgeos-dev libgeos-c1 build-essential ccache
+RUN apt-get update
 
-RUN apt-get install -y wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-pgdg postgresql-8.4 \
+    postgresql-contrib-8.4 postgresql-server-dev-8.4 libpq-dev libproj-dev libproj0 proj-bin libgeos-dev libgeos-c1 build-essential ccache wget
+
 RUN cd /usr/local/src && wget http://download.osgeo.org/postgis/source/postgis-1.4.2.tar.gz && tar xzvf postgis-1.4.2.tar.gz && cd postgis-1.4.2 && ./configure && make -j$(nproc) && make install
 
 USER postgres
@@ -29,8 +30,8 @@ USER root
 
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible
-RUN wget -q https://raw.githubusercontent.com/JustDevZero/postgresql-docker/master/confs/pg_hba.conf -O /etc/postgresql/8.4/main/pg_hba.conf
-RUN wget -q https://raw.githubusercontent.com/JustDevZero/postgresql-docker/master/confs/postgresql.conf -O /etc/postgresql/8.4/main/postgresql.conf
+ADD confs/pg_hba.conf -O /etc/postgresql/8.4/main/pg_hba.conf
+ADD confs/postgresql.conf -O /etc/postgresql/8.4/main/postgresql.conf
 
 # Expose the PostgreSQL port
 EXPOSE 5432
