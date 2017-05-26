@@ -30,8 +30,8 @@ USER root
 
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible
-ADD confs/pg_hba.conf -O /etc/postgresql/8.4/main/pg_hba.conf
-ADD confs/postgresql.conf -O /etc/postgresql/8.4/main/postgresql.conf
+ADD confs/pg_hba.conf /etc/postgresql/8.4/main/pg_hba.conf
+ADD confs/postgresql.conf /etc/postgresql/8.4/main/postgresql.conf
 
 # Expose the PostgreSQL port
 EXPOSE 5432
