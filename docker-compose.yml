@@ -2,13 +2,20 @@ version: '2'
 
 services:
   postgres:
-    image: justdevzero/postgresql
+    image: justdevzero/postgresql9.6
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_DB: 'template1'
     volumes:
-      - 'postgresql:/var/lib/postgresql'
+      - 'pgdata:/var/lib/postgresql'
+      - 'pgetc:/etc/postgresql'
+      - 'pglog:/var/log/postgresql'
     ports:
-      - '5432:5432'
+      - '5431:5431'
 volumes:
-  postgresql:
+  pgdata:
+    driver: local
+  pgetc:
+    driver: local
+  pglog:
+    driver: local
