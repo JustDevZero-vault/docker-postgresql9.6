@@ -1,6 +1,6 @@
 # postgresql-docker
 
-Docker image for PostgreSQL 8.4
+Docker image for PostgreSQL 9.6
 
 **Get it running:**
 
@@ -11,7 +11,7 @@ Docker image for PostgreSQL 8.4
 To test the running container we can use any client, even the commandline one:
 
 
-``psql -h localhost -p 5432 -U pguser -W``
+``psql -h localhost -p 5431 -U pguser -W``
 
 When you are prompted for password, type: pguser
 
