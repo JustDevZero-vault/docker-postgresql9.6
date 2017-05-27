@@ -7,20 +7,18 @@ MAINTAINER Daniel Ripoll <info@danielripoll.es>
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
 # Add PostgreSQL's repository. It contains the most recent stable release
-#     of PostgreSQL, ``8.4``.
+#     of PostgreSQL, ``9.6``.
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # Update the Ubuntu and PostgreSQL repository indexes and install ``python-software-properties``,
-# ``software-properties-common`` and PostgreSQL 8.4
+# ``software-properties-common`` and PostgreSQL 9.6
 # There are some warnings (in red) that show up during the build. You can hide
 # them by prefixing each apt-get statement with DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-pgdg postgresql-8.4 \
-    postgresql-contrib-8.4 postgresql-server-dev-8.4 libpq-dev libproj-dev libproj0 proj-bin libgeos-dev libgeos-c1 build-essential ccache \
-    wget net-tools emacs-nox
-
-RUN cd /usr/local/src && wget http://download.osgeo.org/postgis/source/postgis-1.4.2.tar.gz && tar xzvf postgis-1.4.2.tar.gz && cd postgis-1.4.2 && ./configure && make -j$(nproc) && make install
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-pgdg postgresql-9.6 \
+    postgresql-contrib-9.6 postgresql-server-dev-9.6 libpq-dev libproj-dev libproj0 proj-bin libgeos-dev libgeos-c1 build-essential ccache \
+    wget net-tools emacs-nox postgresql-9.6-postgis-2.3
 
 USER postgres
 
@@ -36,7 +34,7 @@ ADD confs/pg_hba.conf /etc/postgresql/8.4/main/pg_hba.conf
 ADD confs/postgresql.conf /etc/postgresql/8.4/main/postgresql.conf
 
 # Expose the PostgreSQL port
-EXPOSE 5432
+EXPOSE 5431
 
 RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 
